@@ -8,7 +8,7 @@ def chatAPI(request, query):
   openai.api_key = "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"
   # openai.api_key = "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"
 
-  prompt = f"Search the web for information about '{query}' and provide a concise answer:\n"
+  prompt = f"Search the web for information about '{query}' and provide a concise answer and address the user  as a human would :\n"
   
   try:
     response = openai.Completion.create(
