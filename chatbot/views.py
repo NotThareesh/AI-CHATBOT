@@ -1,6 +1,20 @@
 from django.shortcuts import render
 from .models import PromptData
 import openai
+import random
+
+greetings = [
+  "Hello!",
+  "Hi there!",
+  "Greetings!",
+  "Hey!",
+  "Welcome!",
+  "Good day!",
+  "Nice to see you!",
+  "How's it going?",
+  "Great to have you here!"
+]
+
 
 contents = []
 
@@ -22,20 +36,6 @@ def chatAPI(request, query):
      return "Some Error Occured"
 
   return response.choices[0].text.strip()
-  # if request.method == 'POST':
-  #   prompt = request.POST['prompt']
-  #   response = openai.ChatCompletion.create(
-  #     model="text-davinci-003",
-  #     prompt=prompt,
-  #     temperature=1,
-  #     max_tokens=256,
-  #     top_p=1,
-  #     frequency_penalty=0,
-  #     presence_penalty=0
-  #   )
-  #   return JsonResponse(response)
-  
-  # return JsonResponse('BAD API RESPONSE')
 
 # Create your views here.
 def home(request):
@@ -53,4 +53,6 @@ def home(request):
 
         instance.save()
 
-    return render(request, 'base.html', context={'data': contents, 'user': 'None'})
+    greeting = random.choice(greetings)
+
+    return render(request, 'base.html', context={'data': contents, 'user': 'None', 'greeting': greeting})

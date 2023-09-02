@@ -86,6 +86,7 @@
         <div class="chat">
             {% if user == 'None' %}
             <p>
+                <span>{{ greeting }}</span><br><br>
                 {% for ans in data %}
                 <span>User: {{ ans.0 }}</span><br>
                 <span>AI: {{ ans.1 }}</span><br><br>
