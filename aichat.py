@@ -50,6 +50,7 @@ def chat_gpt(query):
         prompt=prompt,
         max_tokens=100
     )
+    
     return response.choices[0].text.strip()
 
 if __name__ == "__main__":
