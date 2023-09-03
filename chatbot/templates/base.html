@@ -24,7 +24,7 @@
     <div class="container">
         <div class="text-center my-5">Doubts? Let's Chat</div>
         <div class="chat">
-            <span>{{ greeting }}</span><br><br>
+            <span><b>{{ greeting }}</b></span><br><br>
 
             <div class="form-floating">
                 <form method="POST" id="prompt-form">
@@ -43,8 +43,8 @@
             {% if user == 'None' %}
             <p>
                 {% for ans in data %}
-                <span>Question: {{ ans.0 }}</span><br>
-                <span>Answer: {{ ans.1 }}</span><br><br>
+                <span><b>Question:</b> {{ ans.0 }}</span><br>
+                <span><b>Answer:</b> {{ ans.1 }}</span><br><br>
                 {% endfor %}
             </p>
             {% endif %}
