@@ -4,5 +4,5 @@ from chatbot.views import *
 
 urlpatterns = [
     path('', home, name='home'),
-    # path('api', chatAPI, name='chatAPI')
+    path('login', login_page, name='login_page')
 ]

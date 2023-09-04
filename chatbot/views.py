@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from .models import PromptData
-from .helper import chatAPI
+from .helper import *
 import random
 
 greetings = (
@@ -22,7 +22,7 @@ def home(request):
     if request.method == 'POST':
         data = request.POST.get('prompt')
 
-        response = chatAPI(request, data)
+        response = chatGPT(data)
 
         contents.append([data, response])
 
@@ -36,3 +36,7 @@ def home(request):
     greeting = random.choice(greetings)
 
     return render(request, 'base.html', context={'data': contents, 'user': 'None', 'greeting': greeting})
+
+
+def login_page(request):
+    return render(request, 'login.html')
