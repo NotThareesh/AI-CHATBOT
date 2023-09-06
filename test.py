@@ -4,7 +4,7 @@ import torch
 
 start1 = time.time()
 
-model = SentenceTransformer("bert-base-uncased")
+model = SentenceTransformer("all-MiniLM-L6-v2")
 
 list1 = (
     (
@@ -28,26 +28,26 @@ list1 = (
     ),
 
     (
-        'What is the environment and why is it important?',
-        'How does human activity impact the environment?',
-        'What are greenhouse gases, and how do they contribute to climate change?',
-        'What is the greenhouse effect, and why is it a concern?',
-        'What are some of the major consequences of global warming?',
-        'How does deforestation affect the environment?',
-        'What is biodiversity, and why is it essential for the environment?',
-        'How do pollution and contaminants harm ecosystems and human health?',
-        'What is the role of renewable energy sources in protecting the environment?',
-        'What are the challenges and benefits of transitioning to a sustainable, green economy?',
-        'How do ocean acidification and plastic pollution affect marine environments?',
-        'What are the primary causes and consequences of air pollution?',
-        'What are the key principles of sustainable agriculture, and why are they important?',
-        'How does overfishing impact aquatic ecosystems and global food security?',
-        'What are the effects of habitat destruction on wildlife populations?',
-        'What is the concept of the circular economy, and how does it promote sustainability?',
-        'How can individuals reduce their carbon footprint and contribute to a healthier environment?',
-        'What are the implications of water scarcity and contamination for communities and ecosystems?',
-        'How does climate change disproportionately affect vulnerable populations?',
-        'What international agreements and initiatives are aimed at addressing environmental issues on a global scale?'
+        "How would you define the concept of evolution in biology?",
+        "What does the theory of evolution seek to explain?",
+        "Can you explain the mechanism of natural selection in evolution?",
+        "Why is genetic variation important in the process of evolution?",
+        "What role do mutations play in the evolutionary process?",
+        "How does adaptation relate to the theory of evolution?",
+        "What are some key pieces of evidence supporting the theory of evolution?",
+        "Who is Charles Darwin, and what is his contribution to our understanding of evolution?",
+        "What is speciation, and how does it occur in the context of evolution?",
+        "How does evolution contribute to the diversity of life on Earth?",
+        "Can you provide examples of evolution occurring in the natural world?",
+        "How do fossils provide insights into the history of evolution?",
+        "What is convergent evolution, and can you give examples?",
+        "How does environmental change influence the process of evolution?",
+        "What is the difference between microevolution and macroevolution?",
+        "What are some common misconceptions about the theory of evolution?",
+        "How does comparative anatomy help us understand evolutionary relationships?",
+        "What is the significance of the fossil record in the study of evolution?",
+        "How do scientists use molecular biology techniques to investigate evolutionary history?",
+        "What are the ethical implications of understanding evolution for human society?"
     ),
 
     (
@@ -72,38 +72,60 @@ list1 = (
         'What materials are skeletons made of?'
         'Can you name some functions of the human skeleton?'
     ),
+
+    (
+        "What harm can microorganisms cause to human health?",
+        "How do microorganisms contribute to the spread of infectious diseases?",
+        "What is the impact of bacteria on food spoilage?",
+        "Can microorganisms contaminate drinking water sources?",
+        "What role do viruses play in causing illnesses?",
+        "How can fungi negatively affect crops and agricultural production?",
+        "Do microorganisms contribute to environmental pollution?",
+        "Are there microorganisms that harm aquatic ecosystems?",
+        "What are the consequences of microbial biofouling in industries?",
+        "How do pathogens develop antibiotic resistance?",
+        "What is the role of microorganisms in dental decay?",
+        "Can microorganisms lead to the deterioration of historic artifacts?",
+        "How do microorganisms contribute to foul odors in waste management?",
+        "What negative effects can microbes have on the quality of indoor air?",
+        "Are there microorganisms that damage building materials and infrastructure?",
+        "What is the connection between microorganisms and respiratory infections?",
+        "Do microorganisms play a role in allergic reactions and asthma?",
+        "How can microbial contamination impact pharmaceutical and medical devices?",
+        "What is the role of microorganisms in soil degradation?",
+        "Can microorganisms harm wildlife and ecosystems?"
+    )
 )
 
-
-prompt = ""
+prompt = "Meaning of life?"
 
 embeddings1 = model.encode(prompt, convert_to_tensor=True)
+
 
 def find_similarity():
     for questions in list1:
         count = 0
         total_similarity = 0
 
-        for sentence in questions: 
+        for sentence in questions:
             count += 1
             embeddings2 = model.encode(sentence, convert_to_tensor=True)
             similarity = util.pytorch_cos_sim(embeddings1, embeddings2)
             total_similarity += similarity
 
-            print(sentence[2:15], total_similarity/count)
+            # print(sentence[2:15], total_similarity/count)
 
             if count >= 10 and torch.gt(total_similarity/count, torch.tensor([[0.40]])):
                 break
 
             if torch.gt(total_similarity/count, torch.tensor([[0.50]])):
                 return "Data Matched"
-            
+
             if torch.lt(total_similarity/count, torch.tensor([[0.0]])):
                 break
-        
-        print('='*50)
-            
+
     return "No Data Matched"
+
 
 end1 = time.time()
 
