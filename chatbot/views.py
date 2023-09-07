@@ -4,22 +4,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from .helper import *
-import random
-
-greetings = (
-    "Hello!",
-    "Hi there!",
-    "Greetings!",
-    "Hey!",
-    "Welcome!",
-    "Good day!",
-    "Nice to see you!",
-    "How's it going?",
-    "Great to have you here!"
-)
 
 contents = []
-greeting = random.choice(greetings)
 
 # Create your views here.
 
@@ -36,7 +22,7 @@ def home(request):
         else:
             contents.append([data, response[0][1]])
 
-    return render(request, 'base.html', context={'data': contents[::-1], 'greeting': greeting})
+    return render(request, 'base.html', context={'data': contents[::-1]})
 
 
 def login_user(request):

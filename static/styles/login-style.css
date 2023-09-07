@@ -6,14 +6,12 @@
 }
 
 body {
-    background: linear-gradient(
-        90deg,
-        rgba(2, 0, 36, 1) 0%,
-        rgba(75, 14, 154, 1) 35%,
-        rgba(0, 212, 255, 1) 100%
-    );
+    background-image: linear-gradient(315deg, #537895 0%, #09203f 74%);
     font-family: "Poppins", sans-serif;
+    width: 100%;
+    height: 100vh;
 }
+
 form {
     border-radius: 20px;
     margin-top: 150px !important;
