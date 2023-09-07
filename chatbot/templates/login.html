@@ -17,21 +17,21 @@
 
 <body>
     <div class="container-fluid">
-        <form class="mx-auto">
+        <form class="mx-auto" method="POST" id="login-form">
             {% csrf_token %}
 
             <h4 class="text-center">Login</h4>
             <div class="mb-3 mt-5">
-                <label for="exampleInputEmail1" name='username' class="form-label">User Name</label>
-                <input class="form-control" id="exampleInputEmail1">
+                <label for="exampleInputEmail1" class="form-label">User Name</label>
+                <input class="form-control" name='username' id="exampleInputEmail1">
             </div>
             <div class="mb-3">
-                <label for="exampleInputPassword1" name='password' class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
-                <div id="emailHelp" class="form-text mt-3">Forget password ?</div>
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" name='password' class="form-control" id="exampleInputPassword1">
             </div>
 
-            <button type="submit" class="btn btn-primary mt-5">Login</button>
+            <button type="submit" name="login" class="btn btn-primary mt-5">Login</button>
+            <button type="submit" name="register" class="btn btn-primary mt-5">Register</button>
         </form>
     </div>
 

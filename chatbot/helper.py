@@ -2,6 +2,10 @@ import csv
 import torch
 from sentence_transformers import SentenceTransformer, util
 import openai
+from .models import *
+import os
+
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 
 def chatGPT(query: str):
@@ -16,11 +20,23 @@ def chatGPT(query: str):
             max_tokens=200
         )
 
-    except Exception as e:
-        print(e)
+    except Exception:
         return "Some Error Occured"
 
     return response.choices[0].text.strip()
+
+
+# def getData(request):
+#     data = []
+#     content = PromptData.objects.filter(username=request.user.id)
+
+#     for item in content:
+#         data.append(item)
+#         print(item)
+
+#     return data
+
+# Custom Model
 
 
 model = SentenceTransformer("all-MiniLM-L6-v2")
@@ -37,7 +53,7 @@ def data_generator():
     file.close()
 
 
-def find_similarity(prompt):
+def find_similarity(prompt: str):
     all_matches = []
     embeddings1 = model.encode(prompt, convert_to_tensor=True)
 
