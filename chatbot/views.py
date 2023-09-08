@@ -11,37 +11,35 @@ contents = []
 
 @login_required(login_url='login')
 def home(request):
-
-    db_obj = PromptData.objects.get(username=request.user)
-    db_obj.data = str(contents)
+    db_obj = PromptData.objects.filter(userid=request.user)
 
     if request.method == 'POST':
-        data = request.POST.get('prompt')
+        prompt = request.POST.get('prompt')
 
-        response = find_similarity(data)
+        response = find_similarity(prompt)
 
         if response == []:
-            response = chatGPT(data)
+            response = chatGPT(prompt)
 
             try:
-                link = image(data)
+                link = image(prompt)
             except:
                 link = ""
 
-            contents.append([data, response+" "+link])
+            contents.append([prompt, response+" "+link])
         else:
             try:
-                link = image(data)
+                link = image(prompt)
             except:
                 link = ""
 
-            contents.append([data, response[0][1]+" "+link])
+            contents.append([prompt, response[0][1]+" "+link])
             response = response[0][1]
 
-        db_obj.data = str(contents)
-        db_obj.save()
+        PromptData.objects.create(
+            userid=request.user, prompt=prompt, output=response).save()
 
-    return render(request, 'base.html', context={'data': contents[::-1], 'user': request.user})
+    return render(request, 'base.html', context={'data': reversed(db_obj)})
 
 
 def login_and_regsiter_user(request):
@@ -71,7 +69,7 @@ def login_and_regsiter_user(request):
                     request, username=username, password=password)
                 login(request, user)
 
-                db_obj = PromptData.objects.create(username=request.user)
+                db_obj = PromptData.objects.create(userid=request.user)
                 db_obj.save()
 
                 return redirect('home')

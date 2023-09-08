@@ -5,10 +5,11 @@ from django.contrib.auth.models import User
 
 
 class PromptData(models.Model):
-    username = models.ForeignKey(User, on_delete=models.CASCADE)
-    data = models.TextField(blank=True)
+    userid = models.ForeignKey(User, on_delete=models.CASCADE)
+    prompt = models.TextField(blank=True)
+    output = models.TextField(blank=True)
 
     def __str__(self):
-        return self.data
+        return self.output
 
     # list_display = Admin._meta.get_all_field_names()

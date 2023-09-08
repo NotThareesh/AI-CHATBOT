@@ -36,9 +36,9 @@
 
             <div class="feed">
                 <p>
-                    {% for ans in data %}
-                    <span><b>Question:</b> {{ ans.0 }}</span><br>
-                    <span id="speak-text"><b>Answer:</b> {{ ans.1 }}</span><br><br>
+                    {% for contents in data %}
+                    <span><b>Question:</b> {{ contents.prompt }}</span><br>
+                    <span id="speak-text"><b>Answer:</b> {{ contents.output }}</span><br><br>
                     {% endfor %}
                 </p>
             </div>
