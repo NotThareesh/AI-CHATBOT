@@ -24,13 +24,11 @@ def home(request):
         else:
             contents.append([data, response[0][1]])
 
-        db_obj, created = PromptData.objects.get_or_create(
-            username=request.user,
-        )
+        # db_obj = PromptData.objects.filter(username=request.user)
 
-        db_obj.data = str(contents)
+        # db_obj.data = str(contents)
 
-        db_obj.save()
+        # db_obj.save()
 
     return render(request, 'base.html', context={'data': contents[::-1], 'user': request.user})
 
@@ -62,6 +60,12 @@ def login_and_regsiter_user(request):
                     request, username=username, password=password)
                 login(request, user)
 
+                db_obj = PromptData.objects.create(
+                    username=request.user,
+                )
+
+                db_obj.save()
+
                 return redirect('home')
 
             except:
@@ -73,19 +77,3 @@ def login_and_regsiter_user(request):
 def logout_user(request):
     logout(request)
     return redirect('login')
-
-
-def register_user(request):
-    form = UserCreationForm()
-
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.username = user.username.lower()
-            user.save()
-            login(request, user)
-
-            return redirect('home')
-        else:
-            print("Error")

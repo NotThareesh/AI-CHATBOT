@@ -26,18 +26,7 @@ def chatGPT(query: str):
     return response.choices[0].text.strip()
 
 
-# def getData(request):
-#     data = []
-#     content = PromptData.objects.filter(username=request.user.id)
-
-#     for item in content:
-#         data.append(item)
-#         print(item)
-
-#     return data
-
 # Custom Model
-
 
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
