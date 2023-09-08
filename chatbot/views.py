@@ -2,17 +2,19 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
 from .helper import *
 from .models import *
 
-contents = []
-
 # Create your views here.
+contents = []
 
 
 @login_required(login_url='login')
 def home(request):
+
+    db_obj = PromptData.objects.get(username=request.user)
+    db_obj.data = str(contents)
+
     if request.method == 'POST':
         data = request.POST.get('prompt')
 
@@ -20,11 +22,22 @@ def home(request):
 
         if response == []:
             response = chatGPT(data)
-            contents.append([data, response])
-        else:
-            contents.append([data, response[0][1]])
 
-        db_obj = PromptData.objects.get(username=request.user)
+            try:
+                link = image(data)
+            except:
+                link = ""
+
+            contents.append([data, response+" "+link])
+        else:
+            try:
+                link = image(data)
+            except:
+                link = ""
+
+            contents.append([data, response[0][1]+" "+link])
+            response = response[0][1]
+
         db_obj.data = str(contents)
         db_obj.save()
 

@@ -4,6 +4,7 @@ from sentence_transformers import SentenceTransformer, util
 import openai
 from .models import *
 import os
+from bing_image_urls import bing_image_urls
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -68,3 +69,9 @@ def find_similarity(prompt: str):
         return [final]
 
     return all_matches
+
+
+def image(prompt):
+    url = bing_image_urls(prompt, limit=1)[0]
+
+    return url

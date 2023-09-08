@@ -13,16 +13,6 @@
 </head>
 
 <body>
-    <!-- <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Education ChatBot</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </nav> -->
-
     <div class="container">
         <div class="chat">
             <div class="text-center my-5">
@@ -48,12 +38,38 @@
                 <p>
                     {% for ans in data %}
                     <span><b>Question:</b> {{ ans.0 }}</span><br>
-                    <span><b>Answer:</b> {{ ans.1 }}</span><br><br>
+                    <span id="speak-text"><b>Answer:</b> {{ ans.1 }}</span><br><br>
                     {% endfor %}
                 </p>
             </div>
         </div>
+
+
+        <div class="col-12 col-sm my-5">
+            <div class="h-100 d-flex align-items-end justify-content-end py-3 my-5">
+                <button type="submit" id="speak-button" class="btn btn-dark">Speak</button>
+            </div>
+        </div>
+
     </div>
+
+    <script>
+        var count = 0;
+        let speech = new SpeechSynthesisUtterance();
+
+        document.querySelector("#speak-button").addEventListener("click", () => {
+            count++
+            speech.text = document.getElementById('speak-text').innerText;
+
+            speech.rate = 0.9;
+
+            if (count % 2 == 0) {
+                window.speechSynthesis.cancel();
+            } else {
+                window.speechSynthesis.speak(speech);
+            }
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
