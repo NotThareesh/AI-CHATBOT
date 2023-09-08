@@ -24,11 +24,9 @@ def home(request):
         else:
             contents.append([data, response[0][1]])
 
-        # db_obj = PromptData.objects.filter(username=request.user)
-
-        # db_obj.data = str(contents)
-
-        # db_obj.save()
+        db_obj = PromptData.objects.get(username=request.user)
+        db_obj.data = str(contents)
+        db_obj.save()
 
     return render(request, 'base.html', context={'data': contents[::-1], 'user': request.user})
 
@@ -60,10 +58,7 @@ def login_and_regsiter_user(request):
                     request, username=username, password=password)
                 login(request, user)
 
-                db_obj = PromptData.objects.create(
-                    username=request.user,
-                )
-
+                db_obj = PromptData.objects.create(username=request.user)
                 db_obj.save()
 
                 return redirect('home')
