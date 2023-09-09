@@ -8,6 +8,7 @@ class PromptData(models.Model):
     userid = models.ForeignKey(User, on_delete=models.CASCADE)
     prompt = models.TextField(blank=True)
     output = models.TextField(blank=True)
+    img = models.TextField(blank=True)
 
     def __str__(self):
         return self.output

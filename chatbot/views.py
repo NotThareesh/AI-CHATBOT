@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
 from .helper import *
 from .models import *
 
@@ -18,26 +19,20 @@ def home(request):
 
         response = find_similarity(prompt)
 
+        try:
+            link = image(prompt)
+        except:
+            link = ""
+
         if response == []:
             response = chatGPT(prompt)
-
-            try:
-                link = image(prompt)
-            except:
-                link = ""
-
-            contents.append([prompt, response+" "+link])
         else:
-            try:
-                link = image(prompt)
-            except:
-                link = ""
-
-            contents.append([prompt, response[0][1]+" "+link])
             response = response[0][1]
 
         PromptData.objects.create(
-            userid=request.user, prompt=prompt, output=response).save()
+            userid=request.user, prompt=prompt, output=response, img=link).save()
+
+        return HttpResponseRedirect(reverse('chatbot-home'))
 
     return render(request, 'base.html', context={'data': reversed(db_obj)})
 
