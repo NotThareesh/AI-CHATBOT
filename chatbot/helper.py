@@ -10,7 +10,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 
 def chatGPT(query: str):
-    openai.api_key = "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"
+    openai.api_key = os.environ['API_KEY']
 
     prompt = f"Search the web for information about '{query}' and provide a concise answer and address the user as a human would and remove any greetings at the beginning in a maximum of 80-100 words :\n"
 
